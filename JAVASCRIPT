@@ -1,0 +1,44 @@
+let timerEl = document.getElementById("Timer");
+let startTimerEl = document.getElementById("startTimer");
+let stopTimerEl = document.getElementById("stopTimer");
+let resetTimerEl = document.getElementById("resetTimer");
+let setTimerEl = document.getElementById("setTimer");
+let time = 25 * 60;
+let timerInterval;
+
+function updateDisplay() {
+    let minutes = Math.floor(time / 60);
+    let seconds = time % 60;
+    document.getElementById("timer").innerText = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+}
+
+function startTimer() {
+    if (!timerInterval) {
+        timerInterval = setInterval(() => {
+            if (time > 0) {
+                time--;
+                updateDisplay();
+            } else {
+                clearInterval(timerInterval);
+                timerInterval = null;
+            }
+        }, 1000);
+    }
+}
+
+function stopTimer() {
+    clearInterval(timerInterval);
+    timerInterval = null;
+}
+
+function resetTimer() {
+    stopTimer();
+    time = 25 * 60;
+    updateDisplay();
+}
+
+function setTimer(minutes) {
+    stopTimer();
+    time = minutes * 60;
+    updateDisplay();
+}
